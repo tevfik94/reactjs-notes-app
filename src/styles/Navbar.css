@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(-45deg, #27374d 0%, #526d82 100%) no-repeat 0 0 /
+    200%;
+  padding: 10px;
+  color: #fff;
+}
+.navbar h1 {
+  font-size: 32px;
+  margin: 0;
+}
+.navbar ul.navbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 10px;
+}
+.navbar ul.navbar-links li {
+  font-size: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+}

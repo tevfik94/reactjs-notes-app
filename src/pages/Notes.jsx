@@ -9,7 +9,7 @@ import DeletePopup from "../components/DeletePopup";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
-
+  const [deletePopup, setDeletePoup] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     fetch("https://ubade.pythonanywhere.com/api/notes", {
@@ -25,7 +25,11 @@ const Notes = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDeleteClicked = () => {
+    setDeletePoup(true);
+  };
+
+  const handleDeleteConfirmed = (id) => {
     fetch("https://ubade.pythonanywhere.com/api/notes", {
       method: "DELETE",
       headers: {
@@ -40,6 +44,12 @@ const Notes = () => {
         setNotes(notes.filter((note) => note.id !== id));
       })
       .catch((error) => console.log(error));
+
+    setDeletePoup(false);
+  };
+
+  const handleCancel = () => {
+    setDeletePoup(false);
   };
 
   const handleEdit = (id) => {
@@ -80,11 +90,21 @@ const Notes = () => {
                       <BiPencil />
                       Edit
                     </li>
-                    <li onClick={() => handleDelete(id)}>
+                    <li onClick={() => handleDeleteConfirmed(id)}>
                       <BiTrash />
                       Delete
                     </li>
+                    <li onClick={handleDeleteClicked}>
+                      <BiTrash />
+                      Deletee
+                    </li>
                   </ul>
+                  {deletePopup && (
+                    <DeletePopup
+                      onCancel={handleCancel}
+                      deleteConfirmed={() => handleDeleteConfirmed(id)}
+                    />
+                  )}
                 </div>
               </div>
             </li>

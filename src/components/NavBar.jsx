@@ -6,9 +6,9 @@ import LogoutPopup from "./LogoutPopup";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [showPopup, setShowPopup] = useState(false);
+  const [logoutPopup, setLogoutPopup] = useState(false);
   const handleLogout = () => {
-    setShowPopup(true);
+    setLogoutPopup(true);
   };
   const handleLogoutConfirmed = async () => {
     try {
@@ -32,10 +32,10 @@ const NavBar = () => {
       console.error(error);
     }
 
-    setShowPopup(false);
+    setLogoutPopup(false);
   };
   const handleCancel = () => {
-    setShowPopup(false);
+    setLogoutPopup(false);
   };
 
   return (
@@ -49,7 +49,7 @@ const NavBar = () => {
           <FiLogOut title="Logout" onClick={handleLogout} />
         </li>
       </ul>
-      {showPopup && (
+      {logoutPopup && (
         <LogoutPopup
           onCancel={handleCancel}
           onLogoutConfirmed={handleLogoutConfirmed}

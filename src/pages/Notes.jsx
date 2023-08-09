@@ -60,6 +60,30 @@ const Notes = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const [showMenu, setShowMenu] = useState(false);
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  const toggleMenu = (id) => {
+    setShowMenu(!showMenu);
+    setSelectedNoteId(id);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showMenu &&
+        !event.target.closest(".settings") // Check if the click is not within the menu
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [showMenu]);
+
   return (
     <div className="notes-page">
       <NavBar />
@@ -80,25 +104,27 @@ const Notes = () => {
               <div className="bottom-content">
                 <span>{formatDate(created)}</span>
 
-                <div className="settings">
-                  <div className="icon">
-                    <AiOutlineEllipsis />
-                  </div>
+                <div
+                  className={`settings ${
+                    showMenu && selectedNoteId === id ? "show" : ""
+                  }`}
+                >
+                  <AiOutlineEllipsis
+                    className="icon"
+                    onClick={() => toggleMenu(id)}
+                  />
 
-                  <ul className="menu">
+                  <ul className={"menu"}>
                     <li onClick={() => handleEdit(id)}>
                       <BiPencil />
                       Edit
                     </li>
-                    <li onClick={() => handleDeleteConfirmed(id)}>
+                    <li onClick={handleDeleteClicked}>
                       <BiTrash />
                       Delete
                     </li>
-                    <li onClick={handleDeleteClicked}>
-                      <BiTrash />
-                      Deletee
-                    </li>
                   </ul>
+
                   {deletePopup && (
                     <DeletePopup
                       onCancel={handleCancel}

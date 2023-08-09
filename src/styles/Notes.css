@@ -71,8 +71,8 @@
   position: relative;
 }
 .notes-page .notes .note .bottom-content .settings .icon {
-  color: #6d6d6d;
-  font-size: 15px;
+  color: #111111;
+  font-size: 25px;
   cursor: pointer;
   padding: 5px;
 }
@@ -88,8 +88,9 @@
   transform-origin: bottom right;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
-  /* overflow: hidden; */
-  /* pointer-events: none; */
+}
+.notes-page .notes .note .bottom-content .settings.show .menu {
+  transform: scale(1);
 }
 
 .notes-page .notes .note .bottom-content .settings .menu li {
@@ -105,10 +106,10 @@
 .notes-page .notes .note .bottom-content .settings .menu li:hover {
   background: #f5f5f5;
 }
-.notes-page .notes .note .bottom-content .settings .menu .icon {
+/* .notes-page .notes .note .bottom-content .settings .menu .icon {
   padding-right: 8px;
   overflow: hidden;
-}
-.notes-page .notes .note .bottom-content .settings:hover .menu {
+} */
+/* .notes-page .notes .note .bottom-content .settings:hover .menu {
   transform: scale(1);
-}
+} */

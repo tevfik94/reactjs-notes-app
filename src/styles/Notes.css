@@ -1,0 +1,114 @@
+.notes-page {
+  height: 100vh;
+  overflow: auto;
+  background: #dde6ed;
+}
+.notes-page .notes {
+  margin: 50px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 220px);
+  gap: 25px;
+}
+.notes-page .notes li {
+  background: #fff;
+  list-style: none;
+  height: 240px;
+  border-radius: 5px;
+  padding: 15px 20px 20px;
+}
+.notes-page .notes .add-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.notes-page .notes .add-note .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 78px;
+  width: 78px;
+  border: 2px dashed #000;
+  border-radius: 50%;
+  font-size: 40px;
+  color: #050505;
+}
+.notes-page .notes .add-note p {
+  color: #000;
+  font-weight: 500;
+  margin-top: 20px;
+}
+.notes-page .notes .note {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.notes-page .notes .note .details p {
+  font-size: 22px;
+  font-weight: 500;
+}
+.notes-page .notes .note .details span {
+  display: block;
+  color: #575757;
+  font-size: 16px;
+  margin-top: 5px;
+}
+.notes-page .notes .note .bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  width: 100%;
+}
+.notes-page .notes .note .bottom-content span {
+  color: #6d6d6d;
+  font-size: 14px;
+}
+.notes-page .notes .note .bottom-content .settings {
+  position: relative;
+}
+.notes-page .notes .note .bottom-content .settings .icon {
+  color: #6d6d6d;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 5px;
+}
+.notes-page .notes .note .bottom-content .settings .menu {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  right: -5px;
+  border-radius: 4px;
+  padding: 5px 0;
+  background: #fff;
+  transform: scale(0);
+  transform-origin: bottom right;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  /* overflow: hidden; */
+  /* pointer-events: none; */
+}
+
+.notes-page .notes .note .bottom-content .settings .menu li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 25px;
+  border-radius: 0;
+  padding: 17px 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.notes-page .notes .note .bottom-content .settings .menu li:hover {
+  background: #f5f5f5;
+}
+.notes-page .notes .note .bottom-content .settings .menu .icon {
+  padding-right: 8px;
+  overflow: hidden;
+}
+.notes-page .notes .note .bottom-content .settings:hover .menu {
+  transform: scale(1);
+}

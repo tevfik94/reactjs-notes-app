@@ -10,7 +10,7 @@
 #container {
   width: 100%;
   max-width: 750px;
-  height: 450px;
+  height: 350px;
   position: relative;
   border-radius: 20px;
   box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.1),
@@ -107,37 +107,7 @@ span {
   color: #333;
   font-size: 1.1em;
   display: inline-block;
-  /* margin: 15px auto; */
   font-weight: 100;
-}
-
-span.loginwith {
-  display: block;
-  width: 100%;
-  margin-top: 1em;
-  white-space: nowrap;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &::before {
-    content: "";
-    display: inline-block;
-    width: 42%;
-    height: 1px;
-    background: #aaa;
-    vertical-align: middle;
-    margin-right: 5%;
-  }
-  &::after {
-    content: "";
-    display: inline-block;
-    width: 45%;
-    height: 1px;
-    background: #aaa;
-    vertical-align: middle;
-    margin-left: 5%;
-  }
 }
 
 button {

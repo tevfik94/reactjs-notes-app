@@ -3,8 +3,6 @@ import "../styles/LoginSignup.css";
 import {
   FiArrowLeftCircle,
   FiArrowRightCircle,
-  FiGithub,
-  FiLinkedin,
   FiUserPlus,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -133,21 +131,6 @@ const LoginSignup = () => {
               />
               <button type="submit">Login</button>
             </form>
-            <span className="loginwith">Or Connect with</span>
-            <a
-              href="https://github.com/tevfik94"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FiGithub className="s-icon" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/tevfik-istanbullu/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FiLinkedin className="s-icon" />
-            </a>
           </div>
         </div>
         <div className="page front">
@@ -176,21 +159,7 @@ const LoginSignup = () => {
         <div className="register">
           <div className="content">
             <h1>Sign Up</h1>
-            <a
-              href="https://github.com/tevfik94"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FiGithub className="s-icon" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/tevfik-istanbullu/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FiLinkedin className="s-icon" />
-            </a>
-            <span className="loginwith">Or</span>
+
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmitRegister}>
               <input

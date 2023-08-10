@@ -45,6 +45,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 .notes-page .notes .note .details p {
   font-size: 22px;
   font-weight: 500;
@@ -54,6 +55,8 @@
   color: #575757;
   font-size: 16px;
   margin-top: 5px;
+  max-height: 130px;
+  overflow-y: auto;
 }
 .notes-page .notes .note .bottom-content {
   display: flex;
@@ -113,3 +116,31 @@
 /* .notes-page .notes .note .bottom-content .settings:hover .menu {
   transform: scale(1);
 } */
+/* .note .details .span::-webkit-scrollbar,
+.popup textarea::-webkit-scrollbar {
+  width: 0;
+}
+.note .details .span:hover::-webkit-scrollbar,
+.popup textarea:hover::-webkit-scrollbar {
+  width: 5px;
+}
+.note .details .span:hover::-webkit-scrollbar-track,
+.popup textarea:hover::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+.note .details .span:hover::-webkit-scrollbar-thumb,
+.popup textarea:hover::-webkit-scrollbar-thumb {
+  background: #e6e6e6;
+  border-radius: 25px;
+} */
+span::-webkit-scrollbar {
+  width: 2px;
+}
+span::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+span::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}

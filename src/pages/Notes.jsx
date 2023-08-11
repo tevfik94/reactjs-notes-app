@@ -7,6 +7,7 @@ import { BiPencil, BiTrash } from "react-icons/bi";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import DeletePopup from "../components/DeletePopup";
 import NewNotePopup from "../components/NewNotePopup";
+import EditNotePopup from "../components/EditNotePopup";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
@@ -17,6 +18,14 @@ const Notes = () => {
     setShowMenu(!showMenu);
     setSelectedNoteId(id);
   };
+  // const toggleMenu = (id) => {
+  //   setShowMenu(!showMenu);
+  //   if (showMenu) {
+  //     setSelectedNoteId(null); // Close the context menu
+  //   } else {
+  //     setSelectedNoteId(id); // Open the context menu for the clicked note
+  //   }
+  // };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +52,21 @@ const Notes = () => {
     setNotes([...notes, newNote]);
     setNewNotePopup(false);
     // Fetch the notes again
+    // fetch("https://ubade.pythonanywhere.com/api/notes", {
+    //   method: "GET",
+    //   headers: {
+    //     Authorization: "Bearer " + localStorage.getItem("token"),
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setNotes(data);
+    //   })
+    //   .catch((error) => console.log(error));
+    fetchNotes();
+  };
+
+  const fetchNotes = () => {
     fetch("https://ubade.pythonanywhere.com/api/notes", {
       method: "GET",
       headers: {
@@ -79,9 +103,9 @@ const Notes = () => {
     setSelectedDeleteNoteId(null);
   };
 
-  const handleEdit = (id) => {
-    navigate(`/notes/edit/${id}`);
-  };
+  // const handleEdit = (id) => {
+  //   navigate(`/notes/edit/${id}`);
+  // };
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -107,6 +131,29 @@ const Notes = () => {
   const [selectedDeleteNoteId, setSelectedDeleteNoteId] = useState(null);
   const toggleDeletePopup = (id) => {
     setSelectedDeleteNoteId(id === selectedDeleteNoteId ? null : id);
+  };
+
+  const [selectedEditNote, setSelectedEditNote] = useState(null); // New state
+
+  // const handleEdit = (note) => {
+  //   toggleMenu(note.id); // Open the context menu for the selected note
+  //   setSelectedEditNote(note);
+  // };
+  const handleEdit = (note) => {
+    toggleMenu(note.id); // Open the context menu for the selected note
+    setSelectedEditNote(note);
+  };
+  const handleNoteUpdate = (updatedNote) => {
+    const updatedNotes = notes.map((note) =>
+      note.id === updatedNote.id ? updatedNote : note
+    );
+    setNotes(updatedNotes);
+    setSelectedEditNote(null); // Close the popup
+    fetchNotes();
+    // Close the context menu if it's open for the updated note
+    if (selectedNoteId === updatedNote.id) {
+      setShowMenu(false);
+    }
   };
 
   return (
@@ -148,10 +195,13 @@ const Notes = () => {
                   />
 
                   <ul className={"menu"}>
-                    <li onClick={() => handleEdit(id)}>
+                    <li
+                      onClick={() => handleEdit({ id, title, body, created })}
+                    >
                       <BiPencil />
                       Edit
                     </li>
+
                     <li onClick={() => toggleDeletePopup(id)}>
                       <BiTrash />
                       Delete
@@ -161,6 +211,13 @@ const Notes = () => {
                     <DeletePopup
                       onCancel={handleDeleteCanceled}
                       deleteConfirmed={() => handleDeleteConfirmed(id)}
+                    />
+                  )}
+                  {selectedEditNote && selectedEditNote.id === id && (
+                    <EditNotePopup
+                      note={selectedEditNote}
+                      onSubmit={handleNoteUpdate}
+                      onCancel={() => setSelectedEditNote(null)}
                     />
                   )}
                 </div>

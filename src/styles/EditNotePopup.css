@@ -1,0 +1,105 @@
+.editnote-popup {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editnote-popup .card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 32px;
+  width: 90%;
+  max-width: 400px;
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.editnote-popup header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 15px 25px;
+  border-bottom: 1px solid #ccc;
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+}
+.x {
+  cursor: pointer;
+}
+
+.editnote-popup .note-title {
+  padding-top: 15px;
+  position: relative;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5;
+}
+.note-title .character-count {
+  position: absolute;
+  bottom: 8px;
+  right: 2px;
+  font-size: 12px;
+  color: gray;
+}
+
+.editnote-popup form :where(input, textarea) {
+  background: #fff;
+  height: 50px;
+  width: 100%;
+  outline: none;
+  font-size: 17px;
+  padding: 0 15px;
+  border-radius: 4px;
+  border: 1px solid #999;
+}
+
+form :where(input, textarea):focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
+}
+.note-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 15px;
+}
+.note-body .character-count {
+  position: absolute;
+  bottom: 8px;
+  right: 2px;
+  font-size: 12px;
+  color: gray;
+}
+form .note-body textarea {
+  height: 150px;
+  resize: none;
+  padding: 8px 15px;
+}
+label {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+form button {
+  width: 100%;
+  height: 50px;
+  color: #fff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 4px;
+  background: #526d82;
+}

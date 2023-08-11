@@ -47,6 +47,7 @@
 }
 
 .notes-page .notes .note .details p {
+  overflow-wrap: break-word;
   font-size: 22px;
   font-weight: 500;
 }
@@ -57,6 +58,7 @@
   margin-top: 5px;
   max-height: 130px;
   overflow-y: auto;
+  overflow-wrap: break-word;
 }
 .notes-page .notes .note .bottom-content {
   display: flex;

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import "../styles/Notes.css";
-import { useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { AiOutlineEllipsis } from "react-icons/ai";
+import { BsEmojiFrown } from "react-icons/bs";
 import DeletePopup from "../components/DeletePopup";
 import NewNotePopup from "../components/NewNotePopup";
 import EditNotePopup from "../components/EditNotePopup";
@@ -18,15 +18,6 @@ const Notes = () => {
     setShowMenu(!showMenu);
     setSelectedNoteId(id);
   };
-  // const toggleMenu = (id) => {
-  //   setShowMenu(!showMenu);
-  //   if (showMenu) {
-  //     setSelectedNoteId(null); // Close the context menu
-  //   } else {
-  //     setSelectedNoteId(id); // Open the context menu for the clicked note
-  //   }
-  // };
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://ubade.pythonanywhere.com/api/notes", {
@@ -48,21 +39,8 @@ const Notes = () => {
   };
 
   const handleNewNoteSubmited = (newNote) => {
-    // console.log("New Note:", newNote);
     setNotes([...notes, newNote]);
     setNewNotePopup(false);
-    // Fetch the notes again
-    // fetch("https://ubade.pythonanywhere.com/api/notes", {
-    //   method: "GET",
-    //   headers: {
-    //     Authorization: "Bearer " + localStorage.getItem("token"),
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setNotes(data);
-    //   })
-    //   .catch((error) => console.log(error));
     fetchNotes();
   };
 
@@ -78,6 +56,14 @@ const Notes = () => {
         setNotes(data);
       })
       .catch((error) => console.log(error));
+  };
+
+  const [selectedDeleteNoteId, setSelectedDeleteNoteId] = useState(null);
+  const toggleDeletePopup = (id) => {
+    setSelectedDeleteNoteId(id === selectedDeleteNoteId ? null : id);
+  };
+  const handleDeleteCanceled = () => {
+    setSelectedDeleteNoteId(null);
   };
 
   const handleDeleteConfirmed = (id) => {
@@ -99,13 +85,25 @@ const Notes = () => {
     setSelectedDeleteNoteId(false);
   };
 
-  const handleDeleteCanceled = () => {
-    setSelectedDeleteNoteId(null);
+  const [selectedEditNote, setSelectedEditNote] = useState(null); // New state
+
+  const handleEdit = (note) => {
+    toggleMenu(note.id); // Open the context menu for the selected note
+    setSelectedEditNote(note);
+  };
+  const handleNoteUpdate = (updatedNote) => {
+    const updatedNotes = notes.map((note) =>
+      note.id === updatedNote.id ? updatedNote : note
+    );
+    setNotes(updatedNotes);
+    setSelectedEditNote(null); // Close the popup
+    fetchNotes();
+    // Close the context menu
+    if (selectedNoteId === updatedNote.id) {
+      setShowMenu(false);
+    }
   };
 
-  // const handleEdit = (id) => {
-  //   navigate(`/notes/edit/${id}`);
-  // };
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -128,34 +126,6 @@ const Notes = () => {
     };
   }, [showMenu]);
 
-  const [selectedDeleteNoteId, setSelectedDeleteNoteId] = useState(null);
-  const toggleDeletePopup = (id) => {
-    setSelectedDeleteNoteId(id === selectedDeleteNoteId ? null : id);
-  };
-
-  const [selectedEditNote, setSelectedEditNote] = useState(null); // New state
-
-  // const handleEdit = (note) => {
-  //   toggleMenu(note.id); // Open the context menu for the selected note
-  //   setSelectedEditNote(note);
-  // };
-  const handleEdit = (note) => {
-    toggleMenu(note.id); // Open the context menu for the selected note
-    setSelectedEditNote(note);
-  };
-  const handleNoteUpdate = (updatedNote) => {
-    const updatedNotes = notes.map((note) =>
-      note.id === updatedNote.id ? updatedNote : note
-    );
-    setNotes(updatedNotes);
-    setSelectedEditNote(null); // Close the popup
-    fetchNotes();
-    // Close the context menu if it's open for the updated note
-    if (selectedNoteId === updatedNote.id) {
-      setShowMenu(false);
-    }
-  };
-
   return (
     <div className="notes-page">
       <NavBar />
@@ -173,10 +143,12 @@ const Notes = () => {
         </li>
 
         {notes.length === 0 ? (
-          <p>No notes to display</p>
+          <p className="no-notes">
+            No notes to display <BsEmojiFrown className="emoji" />
+          </p>
         ) : (
-          notes.map(({ id, title, body, created }) => (
-            <li className="note" key={id}>
+          notes.map(({ id, title, body, created }, index) => (
+            <li className="note" key={`${id}-${index}`}>
               <div className="details">
                 <p>{title}</p>
                 <span>{body}</span>

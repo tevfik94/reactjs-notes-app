@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/NewNotePopup.css";
+import { FaTimes } from "react-icons/fa";
 
 const NewNotePopup = ({ onSubmit, onCancel }) => {
   const [note, setNote] = useState({
@@ -50,21 +51,26 @@ const NewNotePopup = ({ onSubmit, onCancel }) => {
   const titleCount = note.title.length;
   return (
     <div className="newnote-popup">
-      <div className="inner">
-        <h3>New Note</h3>
+      <div className="card">
+        <header>
+          <h3>Add a new note</h3>
+          <FaTimes className={"x"} onClick={handleCancel} />
+        </header>
         <form onSubmit={handleSubmit}>
           <div className="note-title">
+            <label>Title</label>
             <input
               type="text"
               name="title"
               value={note.title}
               onChange={handleChange}
-              placeholder="Title"
-              maxLength={100}
+              maxLength={50}
+              autoComplete="none"
             />
-            <small className="character-count">{titleCount}/100 </small>
+            <small className="character-count">{titleCount}/50 </small>
           </div>
           <div className="note-body">
+            <label>Description</label>
             <textarea
               name="body"
               value={note.body}
@@ -75,8 +81,7 @@ const NewNotePopup = ({ onSubmit, onCancel }) => {
             <small className="character-count">{characterCount}/400 </small>
           </div>
           <div className="buttons">
-            <button type="submit">Submit</button>
-            <button onClick={handleCancel}>Cancel</button>
+            <button type="submit">Add Note</button>
           </div>
         </form>
       </div>

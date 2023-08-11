@@ -9,20 +9,21 @@ import { useNavigate } from "react-router-dom";
 
 const LoginSignup = () => {
   const [isActive, setIsActive] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleRegisterClick = () => {
     setIsActive(true);
+    setError(null);
   };
 
   const handleLoginClick = () => {
     setIsActive(false);
+    setError(null);
   };
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
-
-  const [error, setError] = useState(null);
 
   function handleChange(e) {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -33,15 +34,15 @@ const LoginSignup = () => {
   async function handleSubmitRegister(e) {
     e.preventDefault();
 
-    if (inputs.password.length < 8) {
-      setError("Password should be at least 8 characters long.");
-      return;
-    }
+    // if (inputs.password.length < 8) {
+    //   setError("Password should be at least 8 characters long.");
+    //   return;
+    // }
 
-    if (!/[A-Z]/.test(inputs.password)) {
-      setError("Password should contain at least one uppercase letter.");
-      return;
-    }
+    // if (!/[A-Z]/.test(inputs.password)) {
+    //   setError("Password should contain at least one uppercase letter.");
+    //   return;
+    // }
 
     const response = await fetch(
       "https://ubade.pythonanywhere.com/api/register",
@@ -101,7 +102,7 @@ const LoginSignup = () => {
         localStorage.setItem("token", token);
         navigate("/notes");
       } else {
-        throw new Error("Login faild");
+        setError("Invalid username or password. Please try again.");
       }
     } catch (error) {
       console.error(error);
@@ -114,20 +115,21 @@ const LoginSignup = () => {
         <div className="login">
           <div className="content">
             <h1>Log In</h1>
-            {error && <p>{error}</p>}
+            {error && <p className="error-msg">{error}</p>}
             <form onSubmit={handleSubmitLogin}>
               <input
                 type="text"
                 placeholder="username"
                 name="username"
                 onChange={handleChange}
+                required
               />
               <input
                 type="password"
                 placeholder="password"
                 name="password"
                 onChange={handleChange}
-                autoComplete="new-password"
+                required
               />
               <button type="submit">Login</button>
             </form>
@@ -136,9 +138,13 @@ const LoginSignup = () => {
         <div className="page front">
           <div className="content">
             <FiUserPlus className="b-icon" />
-            <h1>Hello, friend!</h1>
+            <h2>Hello, friend!</h2>
             <p>Enter your personal details and start saving your notes</p>
-            <button onClick={() => handleRegisterClick()} id="register">
+            <button
+              className={"button"}
+              onClick={() => handleRegisterClick()}
+              id="register"
+            >
               Register <FiArrowRightCircle className="s-icon" />
             </button>
           </div>
@@ -146,7 +152,7 @@ const LoginSignup = () => {
         <div className="page back">
           <div className="content">
             <FiUserPlus className="b-icon" />
-            <h1>Welcome Back!</h1>
+            <h2>Welcome Back!</h2>
             <p>
               To keep connected with us please login with your personal info
             </p>
@@ -167,16 +173,34 @@ const LoginSignup = () => {
                 placeholder="Username"
                 name="username"
                 onChange={handleChange}
-                autoComplete="new-username"
+                autoComplete="off"
+                title="Username should not contain spaces."
+                pattern="^\S+$"
+                required
+                className={inputs.username.includes(" ") ? "invalid" : ""}
               />
+              <div
+                className={`input-tooltip ${
+                  inputs.username.includes(" ") ? "show" : ""
+                }`}
+              >
+                Username should not contain spaces.
+              </div>
               <input
                 type="password"
                 placeholder="Password"
                 name="password"
                 onChange={handleChange}
-                autoComplete="new-password"
+                autoComplete="off"
+                required
               />
-              <button type="submit">Register</button>
+              <button
+                type="submit"
+                disabled={inputs.password.length < 8}
+                className="register-button"
+              >
+                Register
+              </button>
             </form>
           </div>
         </div>

@@ -6,12 +6,43 @@ import { FiPlus } from "react-icons/fi";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import DeletePopup from "../components/DeletePopup";
+import NewNotePopup from "../components/NewNotePopup";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
-  const [deletePopup, setDeletePoup] = useState(false);
+  const [newNotePopup, setNewNotePopup] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  const toggleMenu = (id) => {
+    setShowMenu(!showMenu);
+    setSelectedNoteId(id);
+  };
   const navigate = useNavigate();
+
   useEffect(() => {
+    fetch("https://ubade.pythonanywhere.com/api/notes", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("Fetched Notes:", data);
+        setNotes(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleNewNoteClicked = () => {
+    setNewNotePopup(true);
+  };
+
+  const handleNewNoteSubmited = (newNote) => {
+    // console.log("New Note:", newNote);
+    setNotes([...notes, newNote]);
+    setNewNotePopup(false);
+    // Fetch the notes again
     fetch("https://ubade.pythonanywhere.com/api/notes", {
       method: "GET",
       headers: {
@@ -23,10 +54,6 @@ const Notes = () => {
         setNotes(data);
       })
       .catch((error) => console.log(error));
-  }, []);
-
-  const handleDeleteClicked = () => {
-    setDeletePoup(true);
   };
 
   const handleDeleteConfirmed = (id) => {
@@ -45,11 +72,11 @@ const Notes = () => {
       })
       .catch((error) => console.log(error));
 
-    setDeletePoup(false);
+    setSelectedDeleteNoteId(false);
   };
 
-  const handleCancel = () => {
-    setDeletePoup(false);
+  const handleDeleteCanceled = () => {
+    setSelectedDeleteNoteId(null);
   };
 
   const handleEdit = (id) => {
@@ -58,13 +85,6 @@ const Notes = () => {
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  const [showMenu, setShowMenu] = useState(false);
-  const [selectedNoteId, setSelectedNoteId] = useState(null);
-  const toggleMenu = (id) => {
-    setShowMenu(!showMenu);
-    setSelectedNoteId(id);
   };
 
   useEffect(() => {
@@ -84,14 +104,27 @@ const Notes = () => {
     };
   }, [showMenu]);
 
+  const [selectedDeleteNoteId, setSelectedDeleteNoteId] = useState(null);
+  const toggleDeletePopup = (id) => {
+    setSelectedDeleteNoteId(id === selectedDeleteNoteId ? null : id);
+  };
+
   return (
     <div className="notes-page">
       <NavBar />
       <div className="notes">
         <li className="add-note">
-          <FiPlus className="icon" />
+          <FiPlus className="icon" onClick={handleNewNoteClicked} />
+          {newNotePopup && (
+            <NewNotePopup
+              onSubmit={(newNote) => handleNewNoteSubmited(newNote)}
+              onCancel={() => setNewNotePopup(false)}
+            />
+          )}
+
           <p>Add new Note</p>
         </li>
+
         {notes.length === 0 ? (
           <p>No notes to display</p>
         ) : (
@@ -119,15 +152,14 @@ const Notes = () => {
                       <BiPencil />
                       Edit
                     </li>
-                    <li onClick={handleDeleteClicked}>
+                    <li onClick={() => toggleDeletePopup(id)}>
                       <BiTrash />
                       Delete
                     </li>
                   </ul>
-
-                  {deletePopup && (
+                  {selectedDeleteNoteId === id && (
                     <DeletePopup
-                      onCancel={handleCancel}
+                      onCancel={handleDeleteCanceled}
                       deleteConfirmed={() => handleDeleteConfirmed(id)}
                     />
                   )}

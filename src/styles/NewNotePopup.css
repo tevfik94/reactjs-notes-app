@@ -1,0 +1,40 @@
+.newnote-popup {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newnote-popup .inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  color: black;
+  padding: 32px;
+  width: 90%;
+  max-width: 640px;
+  background-color: #dde6ed;
+  /* margin-bottom: 110px; */
+}
+.newnote-popup .inner p {
+  font-weight: 700;
+}
+.newnote-popup .inner .buttons {
+  display: flex;
+  gap: 10px;
+}
+.newnote-popup .inner .buttons button {
+  border-radius: 5px;
+  height: 30px;
+  width: 40px;
+  background-color: #526d82;
+  border: 1px solid #526d82;
+}

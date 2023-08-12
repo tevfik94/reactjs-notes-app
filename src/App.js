@@ -10,7 +10,7 @@ function App() {
       element: <LoginSignup />,
     },
     {
-      path: "/notes",
+      path: "/reactjs-notes-app/notes",
       element: <Notes />,
     },
   ]);

@@ -75,7 +75,6 @@ const NewNotePopup = ({ onSubmit, onCancel }) => {
               name="body"
               value={note.body}
               onChange={handleChange}
-              placeholder="Your Note"
               maxLength={400}
             />
             <small className="character-count">{characterCount}/400 </small>

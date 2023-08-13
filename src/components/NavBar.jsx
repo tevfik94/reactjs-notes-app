@@ -24,8 +24,8 @@ const NavBar = () => {
       );
       if (response.ok) {
         localStorage.removeItem("token");
-        window.history.replaceState(null, "", "/reactjs-notes-app");
-        navigate("/reactjs-notes-app");
+        window.history.replaceState(null, "", "/");
+        navigate("/");
       } else {
         throw new Error("Logout faild");
       }

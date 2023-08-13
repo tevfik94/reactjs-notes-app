@@ -6,11 +6,11 @@ import Notes from "./pages/Notes";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/reactjs-notes-app",
+      path: "/",
       element: <LoginSignup />,
     },
     {
-      path: "/reactjs-notes-app/notes",
+      path: "/notes",
       element: <Notes />,
     },
   ]);

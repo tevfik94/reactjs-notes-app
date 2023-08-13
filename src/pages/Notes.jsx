@@ -144,7 +144,7 @@ const Notes = () => {
 
         {notes.length === 0 ? (
           <p className="no-notes">
-            No notes to display <BsEmojiFrown className="emoji" />
+            No notes to display. <BsEmojiFrown className="emoji" />
           </p>
         ) : (
           notes.map(({ id, title, body, created }, index) => (

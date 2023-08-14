@@ -18,6 +18,7 @@ const LoginSignup = () => {
     if (token) {
       navigateToNotes();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this effect runs once on component mount
 
   const handleRegisterClick = () => {

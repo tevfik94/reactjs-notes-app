@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "../styles/Navbar.css";
-import { FiDownload, FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import LogoutPopup from "./LogoutPopup";
+import ExportNotes from "./ExportNotes";
 
-const NavBar = () => {
+const NavBar = ({ notes }) => {
   const navigate = useNavigate();
   const [logoutPopup, setLogoutPopup] = useState(false);
   const handleLogout = () => {
@@ -44,7 +45,7 @@ const NavBar = () => {
       <h1>Notes App</h1>
       <ul className="navbar-links">
         <li>
-          <FiDownload title="Download notes" />
+          <ExportNotes notes={notes} />
         </li>
         <li>
           <FiLogOut title="Logout" onClick={handleLogout} />

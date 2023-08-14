@@ -128,7 +128,7 @@ const Notes = () => {
 
   return (
     <div className="notes-page">
-      <NavBar />
+      <NavBar notes={notes} />
       <div className="notes">
         <li className="add-note">
           <FiPlus className="icon" onClick={handleNewNoteClicked} />

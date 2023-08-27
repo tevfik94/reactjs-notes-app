@@ -10,16 +10,17 @@ import { useNavigate } from "react-router-dom";
 const LoginSignup = () => {
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
-  const navigateToNotes = () => {
-    navigate("/notes");
-  };
-  useEffect(() => {
+  // const navigateToNotes = () => {
+  //   navigate("/notes");
+  // };
+  /* useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       navigateToNotes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this effect runs once on component mount
+  */
 
   const handleRegisterClick = () => {
     setIsActive(true);
@@ -87,7 +88,7 @@ const LoginSignup = () => {
 
     // Store token in local storage
     localStorage.setItem("token", token);
-    navigate("/notes");
+    navigate("/homepage");
   }
   async function handleSubmitLogin(e) {
     e.preventDefault();
@@ -110,7 +111,7 @@ const LoginSignup = () => {
       if (response.ok) {
         const { token } = await response.json();
         localStorage.setItem("token", token);
-        navigate("/notes");
+        navigate("/homepage");
       } else {
         setError("Invalid username or password. Please try again.");
       }

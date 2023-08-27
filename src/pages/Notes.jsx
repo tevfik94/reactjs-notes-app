@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/navbar/NavBar";
 import "../styles/Notes.css";
 import { FiPlus } from "react-icons/fi";
 import { BiPencil, BiTrash } from "react-icons/bi";
@@ -14,6 +14,7 @@ const Notes = () => {
   const [newNotePopup, setNewNotePopup] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [selectedNoteId, setSelectedNoteId] = useState(null);
+
   const toggleMenu = (id) => {
     setShowMenu(!showMenu);
     setSelectedNoteId(id);
@@ -128,7 +129,8 @@ const Notes = () => {
 
   return (
     <div className="notes-page">
-      <NavBar notes={notes} />
+      {/* <NavBar notes={notes} /> */}
+
       <div className="notes">
         <li className="add-note">
           <FiPlus className="icon" onClick={handleNewNoteClicked} />

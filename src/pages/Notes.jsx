@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/navbar/NavBar";
 import "../styles/Notes.css";
 import { FiPlus } from "react-icons/fi";
 import { BiPencil, BiTrash } from "react-icons/bi";
@@ -9,7 +8,7 @@ import DeletePopup from "../components/DeletePopup";
 import NewNotePopup from "../components/NewNotePopup";
 import EditNotePopup from "../components/EditNotePopup";
 
-const Notes = () => {
+const Notes = ({ searchTerm }) => {
   const [notes, setNotes] = useState([]);
   const [newNotePopup, setNewNotePopup] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -19,6 +18,10 @@ const Notes = () => {
     setShowMenu(!showMenu);
     setSelectedNoteId(id);
   };
+  const filteredNotes = notes.filter(
+    (note) =>
+      note.title && note.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     fetch("https://ubade.pythonanywhere.com/api/notes", {
@@ -129,8 +132,6 @@ const Notes = () => {
 
   return (
     <div className="notes-page">
-      {/* <NavBar notes={notes} /> */}
-
       <div className="notes">
         <li className="add-note">
           <FiPlus className="icon" onClick={handleNewNoteClicked} />
@@ -144,12 +145,12 @@ const Notes = () => {
           <p>Add new Note</p>
         </li>
 
-        {notes.length === 0 ? (
+        {filteredNotes.length === 0 ? (
           <p className="no-notes">
             No notes to display. <BsEmojiFrown className="emoji" />
           </p>
         ) : (
-          notes.map(({ id, title, body, created }, index) => (
+          filteredNotes.map(({ id, title, body, created }, index) => (
             <li className="note" key={`${id}-${index}`}>
               <div className="details">
                 <p>{title}</p>

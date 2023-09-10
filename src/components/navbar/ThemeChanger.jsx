@@ -1,10 +1,15 @@
 import React from "react";
-import { RiSunFill } from "react-icons/ri";
+import { RiSunFill, RiMoonFill } from "react-icons/ri";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const ThemeChanger = () => {
+  const { isDarkMode, toggleTheme } = useTheme();
   return (
     <div>
-      <RiSunFill />
+      <button onClick={toggleTheme}>
+        {/* {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"} */}
+        {isDarkMode ? <RiSunFill /> : <RiMoonFill />}
+      </button>
     </div>
   );
 };

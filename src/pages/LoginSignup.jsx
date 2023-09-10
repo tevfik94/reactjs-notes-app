@@ -109,8 +109,9 @@ const LoginSignup = () => {
       );
 
       if (response.ok) {
-        const { token } = await response.json();
+        const { token, username } = await response.json();
         localStorage.setItem("token", token);
+        localStorage.setItem("username", username); // Save the username
         navigate("/homepage");
       } else {
         setError("Invalid username or password. Please try again.");
